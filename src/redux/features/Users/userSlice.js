@@ -62,14 +62,19 @@ export const resendOtp = createAsyncThunk("user/resendOtp", async (email) => {
 export const fetchLogin = createAsyncThunk(
   "user/fetchLogin",
   async ({ email, password }, { rejectWithValue }) => {
-    const response = await fetch(`${import.meta.env.VITE_BASE_URL}login/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    return handleResponse(response).catch((error) =>
-      rejectWithValue(error.message)
-    );
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}login/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      // Handle response
+      return await handleResponse(response);
+    } catch (error) {
+      console.error("Login error:", error); // Log error for debugging
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -247,8 +252,7 @@ const userSlice = createSlice({
       .addCase(uploadAvatar.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      })
-  
+      });
   },
 });
 
