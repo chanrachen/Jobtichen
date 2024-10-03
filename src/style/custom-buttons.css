@@ -1,0 +1,16 @@
+/* custom-buttons.css */
+.custom-button {
+    background-color: white !important;
+    color: rgb(0, 0, 0) !important;
+    border: none;
+    outline: none;
+    font-weight: bold !important;
+    transition: background-color 0.3s ease;
+  }
+  
+  
+  
+  .custom-button:focus {
+    box-shadow: none !important; /* Remove default ring effect */
+  }
+  
